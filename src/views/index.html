@@ -56,7 +56,7 @@
     var array = ""
     var ruta = ""
 
-    fs.readFile("../confi.txt", 'utf-8', function (err, data) {
+    fs.readFile("./confi.txt", 'utf-8', function (err, data) {
       if (err) {
         alert("Ha ocurrido un error al leer el archivo :" + err.message);
         return;
