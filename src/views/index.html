@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    #customers {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #customers td,
+    #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    #customers tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    #customers tr:hover {
+      background-color: #ddd;
+    }
+
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: rgb(28, 98, 179);
+      color: white;
+    }
+  </style>
+  <title> Add Rows To HTML Table From Array </title>
+  <meta charset="windows-1252">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+  <table id="customers" border="1">
+
+    <!-- The Row Number 0 -->
+    <tr>
+      <th>fecha 1</th>
+      <th>fecha 2</th>
+      <th>fecha 3</th>
+
+    </tr>
+
+  </table>
+  <script>
+    var app = require('electron').remote;
+    var dialog = app.dialog;
+    var fs = require('fs');
+    var array = ""
+    var ruta = ""
+
+    fs.readFile("../confi.txt", 'utf-8', function (err, data) {
+      if (err) {
+        alert("Ha ocurrido un error al leer el archivo :" + err.message);
+        return;
+      }
+
+      ruta = data;
+      readFile()
+    });
+
+
+    function readFile() {
+      let filePath = ruta;
+      //let newFile = fs.readFileSync(filePath);
+      fs.readFile(filePath, 'utf-8', function (err, data) {
+        if (err) {
+          alert("Ha ocurrido un error al leer el archivo :" + err.message);
+          return;
+        }
+
+        array = data;
+        creartabla()
+      });
+    }
+
+
+
+
+
+
+    /* Method 1
+    // rows
+    for(var i = 1; i < table.rows.length; i++)
+    {
+      // cells
+      for(var j = 0; j < table.rows[i].cells.length; j++)
+      {
+          table.rows[i].cells[j].innerHTML = array[i - 1][j];
+      }
+    }
+        */
+
+    // Method 2
+
+
+    // create a new row
+    function creartabla() {
+      array = array.split(";");
+      table = document.getElementById("customers");
+      var newRow = table.insertRow(table.length);
+      for (var j = 0; j < array.length; j++) {
+        // create a new cell
+        var cell = newRow.insertCell(j);
+
+        // add value to the cell
+        cell.innerHTML = array[j];
+      }
+    }
+
+  </script>
+</body>
+
+</html>
